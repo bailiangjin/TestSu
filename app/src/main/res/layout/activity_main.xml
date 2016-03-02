@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:onClick="click1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="禁用360" />
+    <Button
+        android:onClick="click2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启用360" />
+    
+    
+    <Button
+        android:onClick="click3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="禁用LBE" />
+    <Button
+        android:onClick="click4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启用LBE" />
+</LinearLayout>
