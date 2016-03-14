@@ -9,12 +9,12 @@
         android:onClick="click1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="禁用360" />
+        android:text="禁用SuperSU" />
     <Button
         android:onClick="click2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="启用360" />
+        android:text="启用SuperSU" />
     
     
     <Button
@@ -27,4 +27,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="启用LBE" />
+
+
+    <Button
+        android:onClick="click5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="禁用360" />
+    <Button
+        android:onClick="click6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启用360" />
+
+    <Button
+        android:onClick="click7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="安装内部应用" />
+
+    <Button
+        android:onClick="click8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="打开内部应用" />
+
 </LinearLayout>
