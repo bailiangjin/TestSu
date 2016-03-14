@@ -6,15 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.kevin.baselibrary.utils.AssetUtils;
-import com.kevin.baselibrary.utils.FilePathUtil;
 import com.kevin.baselibrary.utils.ToastUtils;
 
 import java.io.File;
-import java.io.IOException;
 
 public class MainActivity extends Activity {
-    private String apkFilePath = "";
     private String TAG = this.getClass().getName();
 
     @Override
@@ -22,76 +18,37 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        apkFilePath = FilePathUtil.getSdcardPath() + File.separator + "innerApp.apk";
+        //拷贝文件
+        CommonUtils.copyApkFile(this, Config.APK_FILEPATH);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AssetUtils.copyAssetFiles(MainActivity.this, "innerApp.apk", apkFilePath);
-            }
-        }).start();
+        RootUtils.requestRootlimit();
 
-        try {
-            Runtime.getRuntime().exec("su");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
     }
 
     public void click1(View view) {
 
-        ToastUtils.shortShow(this,"禁用SuperSU");
-            // List<String> results = RootTools.sendShell(
-            // "pm disable com.qihoo360.mobilesafe", 30000);
-            // System.out.println(results.get(0));
-            // List<String> results1 = RootTools.sendShell(
-            // "pm disable eu.chainfire.supersu", 30000);
-            // System.out.println(results1.get(0));
-            // List<String> results2 = RootTools.sendShell(
-            // "pm disable com.noshufou.android.su", 30000);
-            // System.out.println(results2.get(0));
-            // List<String> results3 = RootTools.sendShell(
-            // "pm disable co.lvdou.superuser", 30000);
-            // System.out.println(results3.get(0));
-            // List<String> results4 = RootTools.sendShell(
-            // "pm disable com.mgyun.shua.su", 30000);
-            // System.out.println(results4.get(0));
-            RootUtils.disableApp("com.noshufou.android.su");
-            RootUtils.disableApp("eu.chainfire.supersu");
+        ToastUtils.shortShow(this, "禁用SuperSU");
+        RootUtils.disableApp("com.noshufou.android.su");
+        RootUtils.disableApp("eu.chainfire.supersu");
     }
 
     public void click2(View view) {
-        ToastUtils.shortShow(this,"启用SuperSU");
-            // List<String> results = RootTools.sendShell(
-            // "pm enable com.qihoo360.mobilesafe", 30000);
-            // System.out.println(results.get(0));
-            // List<String> results1 = RootTools.sendShell(
-            // "pm enable eu.chainfire.supersu", 30000);
-            // System.out.println(results1.get(0));
-            // List<String> results2 = RootTools.sendShell(
-            // "pm enable com.noshufou.android.su", 30000);
-            // System.out.println(results2.get(0));
-            // List<String> results3 = RootTools.sendShell(
-            // "pm enable co.lvdou.superuser", 30000);
-            // System.out.println(results3.get(0));
-            // List<String> results4 = RootTools.sendShell(
-            // "pm enable com.mgyun.shua.su", 30000);
-            // System.out.println(results4.get(0));
-            RootUtils.enableApp("com.noshufou.android.su");
-            RootUtils.enableApp("eu.chainfire.supersu");
+        ToastUtils.shortShow(this, "启用SuperSU");
+        RootUtils.enableApp("com.noshufou.android.su");
+        RootUtils.enableApp("eu.chainfire.supersu");
 
     }
 
     public void click3(View view) {
-        ToastUtils.shortShow(this,"禁用LBE");
+        ToastUtils.shortShow(this, "禁用LBE");
         RootUtils.disableApp("com.lbe.security");
 
     }
 
     public void click4(View view) {
-        ToastUtils.shortShow(this,"启用LBE");
+        ToastUtils.shortShow(this, "启用LBE");
         RootUtils.enableApp("com.lbe.security");
     }
 
@@ -116,9 +73,9 @@ public class MainActivity extends Activity {
 
         Toast.makeText(MainActivity.this, "安装应用", Toast.LENGTH_SHORT).show();
 
-        RootUtils.installApk(apkFilePath);
+        RootUtils.installApk(Config.APK_FILEPATH);
 
-        new File(apkFilePath).delete();
+        new File(Config.APK_FILEPATH).delete();
     }
 
     public void click8(View view) {
@@ -133,16 +90,13 @@ public class MainActivity extends Activity {
 
     public void click9(View view) {
 
-        String action = Config.ACTION;
         Toast.makeText(MainActivity.this, "卸载内部应用", Toast.LENGTH_SHORT).show();
         String packageName = Config.PACKAGENAME;
-        boolean isSuccess =RootUtils.uninstallApk(packageName);
+        boolean isSuccess = RootUtils.uninstallApk(packageName);
         Log.d(TAG, "卸载 " + packageName + ":" + isSuccess);
 
 
-
     }
-
 
 
 }

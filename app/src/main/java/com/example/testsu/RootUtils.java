@@ -11,13 +11,27 @@ import java.io.IOException;
 import java.util.List;
 
 
+/**
+ * Root 工具类
+ */
 public class RootUtils {
 
     private static String TAG = "RootUtils";
 
+    public static boolean requestRootlimit(){
+        try {
+            Runtime.getRuntime().exec("su");
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
     public static boolean installApk(String apkFilePath) {
         if (TextUtils.isEmpty(apkFilePath)) {
-            Log.e(TAG, "apkFilePath is null or empty");
+            Log.e(TAG, "APK_FILEPATH is null or empty");
             return false;
         }
         Log.d(TAG,"install " + apkFilePath);
@@ -28,10 +42,10 @@ public class RootUtils {
 
     public static boolean uninstallApk(String packageName) {
         if (TextUtils.isEmpty(packageName)) {
-            Log.e(TAG, "apkFilePath is null or empty");
+            Log.e(TAG, "APK_FILEPATH is null or empty");
             return false;
         }
-        Log.d(TAG,"install " + packageName);
+        Log.d(TAG,"uninstall " + packageName);
         String cmd = "pm uninstall " + packageName;
         return executeCMD(cmd);
 
