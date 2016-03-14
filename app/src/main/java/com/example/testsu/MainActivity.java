@@ -123,10 +123,22 @@ public class MainActivity extends Activity {
 
     public void click8(View view) {
 
-        String action = Config.action;
-        Toast.makeText(MainActivity.this, "打开应用", Toast.LENGTH_SHORT).show();
+        String action = Config.ACTION;
+        Toast.makeText(MainActivity.this, "打开内部应用", Toast.LENGTH_SHORT).show();
         boolean isSuccess = CommonUtils.openApp(MainActivity.this, action);
-        Log.d(TAG,"open " + action + ":" + isSuccess);
+        Log.d(TAG, "open " + action + ":" + isSuccess);
+
+
+    }
+
+    public void click9(View view) {
+
+        String action = Config.ACTION;
+        Toast.makeText(MainActivity.this, "卸载内部应用", Toast.LENGTH_SHORT).show();
+        String packageName = Config.PACKAGENAME;
+        boolean isSuccess =RootUtils.uninstallApk(packageName);
+        Log.d(TAG, "卸载 " + packageName + ":" + isSuccess);
+
 
 
     }

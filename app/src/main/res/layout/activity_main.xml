@@ -52,4 +52,10 @@
         android:layout_height="wrap_content"
         android:text="打开内部应用" />
 
+    <Button
+        android:onClick="click9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="卸载内部应用" />
+
 </LinearLayout>

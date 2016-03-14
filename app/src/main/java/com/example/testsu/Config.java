@@ -6,5 +6,6 @@ package com.example.testsu;
  */
 public class Config {
 
-    public static final String action = "com.kevin.innerapp";
+    public static final String ACTION = "com.kevin.innerapp";
+    public static final String PACKAGENAME = "com.kevin.innerapp";
 }
