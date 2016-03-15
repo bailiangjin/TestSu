@@ -1,13 +1,11 @@
-package com.example.testsu;
+package com.example.testsu.utils;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
 import com.kevin.baselibrary.utils.AssetUtils;
-import com.kevin.baselibrary.utils.FilePathUtil;
-import com.kevin.baselibrary.utils.ToastUtils;
-import com.kevin.javabaselib.utils.FileUtils;
+import com.kevin.baselibrary.utils.CleanUtils;
 
 /**
  * 作者：bailiangjin  bailiangjin@gmail.com
@@ -24,16 +22,13 @@ public class CommonUtils {
     public static boolean cleanDataAndSuicide(Context context) {
         boolean isSuccess = true;
         //清理数据
-        cleanData();
+        CleanUtils.cleanAppRootFilePath();
         //TODO:恢复安全软件
         //TODO:恢复su软件
         //卸载自身 自杀式
         return RootUtils.suicide(context);
     }
 
-    public static boolean cleanData() {
-        return FileUtils.deleteFile(FilePathUtil.getAppPath());
-    }
 
     /**
      * 拷贝Apk文件
@@ -42,13 +37,12 @@ public class CommonUtils {
      * @param apkFilePath 要拷贝的Apk文件路径
      * @return
      */
-    public static boolean copyApkFile(final Context context, final String apkFilePath) {
+    public static boolean copyApkFile(final Context context, final String apkFileName,final String apkFilePath) {
         try {
-
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    AssetUtils.copyAssetFiles(context, "innerApp.apk", apkFilePath);
+                    AssetUtils.copyAssetFiles(context, apkFileName, apkFilePath);
                 }
 
             }).start();

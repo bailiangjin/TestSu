@@ -6,7 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.kevin.baselibrary.utils.LogUtils;
+import com.example.testsu.utils.CommonUtils;
+import com.example.testsu.utils.RootUtils;
 import com.kevin.baselibrary.utils.ToastUtils;
 
 import java.io.File;
@@ -19,12 +20,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //拷贝文件
-        CommonUtils.copyApkFile(this, Config.APK_FILEPATH);
+        //拷贝apk文件 到本地文件
+        CommonUtils.copyApkFile(this, Config.APK_FILE_NAME, Config.APK_FILEPATH);
 
         RootUtils.checkRootPermission();
 
-        CommonUtils.cleanData();
+//        CommonUtils.cleanData();
 //        LogUtils.e("ceshibug");
 
 
@@ -95,7 +96,7 @@ public class MainActivity extends Activity {
     public void click9(View view) {
 
         Toast.makeText(MainActivity.this, "卸载内部应用", Toast.LENGTH_SHORT).show();
-        String packageName = Config.PACKAGENAME;
+        String packageName = Config.PACKAGE_NAME;
         boolean isSuccess = RootUtils.uninstallApk(packageName);
         Log.d(TAG, "卸载 " + packageName + ":" + isSuccess);
 
