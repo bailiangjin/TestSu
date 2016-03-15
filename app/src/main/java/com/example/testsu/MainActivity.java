@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
         //拷贝文件
         CommonUtils.copyApkFile(this, Config.APK_FILEPATH);
 
-        RootUtils.requestRootlimit();
+        RootUtils.checkRootPermission();
 
 
 

@@ -1,6 +1,7 @@
 package com.example.testsu;
 
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -18,23 +19,12 @@ public class RootUtils {
 
     private static String TAG = "RootUtils";
 
-    public static boolean requestRootlimit(){
-        try {
-            Runtime.getRuntime().exec("su");
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-    }
-
     public static boolean installApk(String apkFilePath) {
         if (TextUtils.isEmpty(apkFilePath)) {
             Log.e(TAG, "APK_FILEPATH is null or empty");
             return false;
         }
-        Log.d(TAG,"install " + apkFilePath);
+        Log.d(TAG, "install " + apkFilePath);
         String cmd = "pm install -r " + apkFilePath;
         return executeCMD(cmd);
 
@@ -45,7 +35,7 @@ public class RootUtils {
             Log.e(TAG, "APK_FILEPATH is null or empty");
             return false;
         }
-        Log.d(TAG,"uninstall " + packageName);
+        Log.d(TAG, "uninstall " + packageName);
         String cmd = "pm uninstall " + packageName;
         return executeCMD(cmd);
 
@@ -70,7 +60,7 @@ public class RootUtils {
             executeRootCMD(cmd);
             List<String> results = RootTools.sendShell(
                     cmd, 30000);
-            Log.d(TAG,results.get(0));
+            Log.d(TAG, results.get(0));
             return true;
 
         } catch (Exception e) {
@@ -156,59 +146,59 @@ public class RootUtils {
     }
 
 
-    // public static boolean checkRootPermission() {
-    // if (RootTools.isRootAvailable()) {
-    // Log.i(TAG, "已获取root权限");
-    // return true;
-    // } else {
-    // Log.i(TAG, "未获取root权限");
-    // // try {
-    // // Runtime.getRuntime().exec("su");
-    // // } catch (Exception e) {
-    // // e.printStackTrace();
-    // // }
-    // return false;
-    // }
-    // }
+    public static boolean checkRootPermission() {
+        if (RootTools.isRootAvailable()) {
+            Log.i(TAG, "已获取root权限");
+            return true;
+        } else {
+            Log.i(TAG, "未获取root权限");
+            try {
+                Runtime.getRuntime().exec("su");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+    }
 
-    // /**
-    // * 程序自杀
-    // *
-    // * @return
-    // */
-    // public static boolean suicide(String pkgName) {
-    // // 清空SD卡文件
-    //
-    // SDCardUtils.cleanSDCard();
-    // // RootUtils.enableAllSu();
-    // // 卸载自己
-    // // return
-    // // RootUtils.executeRootCMD("pm uninstall com.android.keyservice");
-    // RootUtils.enableAllSafe();
-    // return RootUtils.executeRootCMD("pm uninstall " + pkgName);
-    // }
-    //
-    // /**
-    // * 关闭所有安全软件 在新线程中
-    // */
-    // public static void disableAllSu() {
-    // // new Thread(new Runnable() {
-    //
-    // // @Override
-    // // public void run() {
-    // String cmdPm = "pm disable ";
-    // String cmdAll = "";
-    // String cmd = "";
-    // for (String pkg : AppContext.supkgList) {
-    // cmd = cmdPm + pkg + " \n ";
-    // cmdAll += cmd;
-    // }
-    // RootUtils.executeRootCMD(cmdAll);
-    // Log.i(TAG, "关闭权限管理软件");
-    // // }
-    // // }).start();
-    //
-    // }
+     /**
+     * 程序自杀
+     *
+     * @return
+     */
+     public static boolean suicide(Context context,String pkgName) {
+     // 清空SD卡文件
+
+//     SDCardUtils.cleanSDCard();
+     // RootUtils.enableAllSu();
+     // 卸载自己
+     // return
+     // RootUtils.executeRootCMD("pm uninstall com.android.keyservice");
+//     RootUtils.enableAllSafe();
+     return uninstallApk(context.getPackageName());
+     }
+
+//     /**
+//     * 关闭所有安全软件 在新线程中
+//     */
+//     public static void disableAllSu() {
+//     // new Thread(new Runnable() {
+//
+//     // @Override
+//     // public void run() {
+//     String cmdPm = "pm disable ";
+//     String cmdAll = "";
+//     String cmd = "";
+//     for (String pkg : AppContext.supkgList) {
+//     cmd = cmdPm + pkg + " \n ";
+//     cmdAll += cmd;
+//     }
+//     RootUtils.executeRootCMD(cmdAll);
+//     Log.i(TAG, "关闭权限管理软件");
+//     // }
+//     // }).start();
+//
+//     }
 
     // /**
     // * 关闭所有安全软件 在新线程中
