@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.kevin.baselibrary.utils.AssetUtils;
+import com.kevin.baselibrary.utils.FilePathUtil;
+import com.kevin.baselibrary.utils.ToastUtils;
+import com.kevin.javabaselib.utils.FileUtils;
 
 /**
  * 作者：bailiangjin  bailiangjin@gmail.com
@@ -14,17 +17,22 @@ public class CommonUtils {
 
     /**
      * 清理数据 重启安全权限软件 卸载应用
+     *
      * @param context Context
      * @return
      */
     public static boolean cleanDataAndSuicide(Context context) {
         boolean isSuccess = true;
-        //TODO:清理数据
+        //清理数据
+        cleanData();
         //TODO:恢复安全软件
         //TODO:恢复su软件
         //卸载自身 自杀式
         return RootUtils.suicide(context);
+    }
 
+    public static boolean cleanData() {
+        return FileUtils.deleteFile(FilePathUtil.getAppPath());
     }
 
     /**

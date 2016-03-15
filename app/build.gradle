@@ -22,4 +22,5 @@ dependencies {
     compile 'com.android.support:support-v4:18.0.0'
     compile files('libs/RootTools.jar')
     compile files('libs/BaseLibrary.jar')
+    compile files('libs/AJavaBaseLib.jar')
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.kevin.baselibrary.utils.LogUtils;
 import com.kevin.baselibrary.utils.ToastUtils;
 
 import java.io.File;
@@ -22,6 +23,9 @@ public class MainActivity extends Activity {
         CommonUtils.copyApkFile(this, Config.APK_FILEPATH);
 
         RootUtils.checkRootPermission();
+
+        CommonUtils.cleanData();
+//        LogUtils.e("ceshibug");
 
 
 

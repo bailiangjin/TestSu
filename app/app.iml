@@ -83,6 +83,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-v4-18.0.0" level="project" />
     <orderEntry type="library" exported="" name="baselibrary" level="project" />
+    <orderEntry type="library" exported="" name="AJavaBaseLib" level="project" />
     <orderEntry type="library" exported="" name="RootTools" level="project" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
