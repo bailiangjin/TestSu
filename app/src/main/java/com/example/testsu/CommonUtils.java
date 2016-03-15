@@ -12,15 +12,30 @@ import com.kevin.baselibrary.utils.AssetUtils;
  */
 public class CommonUtils {
 
+    /**
+     * 清理数据 重启安全权限软件 卸载应用
+     * @param context Context
+     * @return
+     */
+    public static boolean cleanDataAndSuicide(Context context) {
+        boolean isSuccess = true;
+        //TODO:清理数据
+        //TODO:恢复安全软件
+        //TODO:恢复su软件
+        //卸载自身 自杀式
+        return RootUtils.suicide(context);
+
+    }
 
     /**
      * 拷贝Apk文件
-     * @param context Context
+     *
+     * @param context     Context
      * @param apkFilePath 要拷贝的Apk文件路径
      * @return
      */
-    public static boolean copyApkFile (final Context context,final String apkFilePath){
-        try{
+    public static boolean copyApkFile(final Context context, final String apkFilePath) {
+        try {
 
             new Thread(new Runnable() {
                 @Override
@@ -30,7 +45,7 @@ public class CommonUtils {
 
             }).start();
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -38,18 +53,19 @@ public class CommonUtils {
 
     /**
      * 打开应用
+     *
      * @param activity Activity
-     * @param action intent 方式 打开其他应用的 action
+     * @param action   intent 方式 打开其他应用的 action
      * @return
      */
-    public static boolean openApp(Activity activity,String action){
-        try{
+    public static boolean openApp(Activity activity, String action) {
+        try {
 
             Intent intent = new Intent();
             intent.setAction(action);
             activity.startActivity(intent);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
