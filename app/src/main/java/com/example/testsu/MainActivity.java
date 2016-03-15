@@ -1,8 +1,6 @@
 package com.example.testsu;
 
 import android.app.Activity;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +10,6 @@ import com.example.testsu.utils.CommonUtils;
 import com.example.testsu.utils.RootUtils;
 import com.kevin.baselibrary.utils.ToastUtils;
 
-import java.io.File;
 
 public class MainActivity extends Activity {
     private String TAG = this.getClass().getName();

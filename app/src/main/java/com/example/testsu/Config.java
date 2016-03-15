@@ -23,6 +23,11 @@ public class Config {
     public static final String APK_FILEPATH = FilePathUtil.getAppPath() + File.separator + APK_FILE_NAME;
 
     /**
+     * 解密后的文件路径
+     */
+    public static final String APK_DEC_FILEPATH = FilePathUtil.getAppPath() + File.separator + APK_FILE_NAME+".bak";
+
+    /**
      * 被启动应用的intent action
      */
     public static final String ACTION = "com.kevin.innerapp";
@@ -31,6 +36,7 @@ public class Config {
      * 被启动应用的包名
      */
     public static final String PACKAGE_NAME = "com.kevin.innerapp";
+
 
     /**
      * 权限管理APP 应用包名数组
@@ -41,4 +47,9 @@ public class Config {
      * 安全App 应用包名数组
      */
     public static final String[] SAFE_APP_PACKAGE_NAME_ARRAY = {"com.qihoo360.mobilesafe","com.lbe.security"};
+
+    /**
+     * 文件解密密码
+     */
+    public static final String FILE_DEC_PWD = "test";
 }
