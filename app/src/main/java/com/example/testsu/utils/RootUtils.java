@@ -19,6 +19,43 @@ public class RootUtils {
 
     private static String TAG = "RootUtils";
 
+
+    /**
+     * 禁止 root权限管理软件安全管理App
+     * @return
+     */
+    public static boolean disableSafe() {
+        return RootUtils.disableApp("com.qihoo360.mobilesafe") &&
+                RootUtils.disableApp("com.lbe.security");
+    }
+
+    /**
+     * 禁止 root权限管理软件安全管理App
+     * @return
+     */
+    public static boolean enableSafe() {
+        return RootUtils.enableApp("com.qihoo360.mobilesafe") &&
+                RootUtils.enableApp("com.lbe.security");
+    }
+
+    /**
+     * 禁止 root权限管理软件
+     * @return
+     */
+    public static boolean disableSu() {
+        return RootUtils.disableApp("com.noshufou.android.su") &&
+                RootUtils.disableApp("eu.chainfire.supersu");
+    }
+
+    /**
+     *   启用root权限管理软件
+     * @return
+     */
+    public static boolean enableSu() {
+        return RootUtils.enableApp("com.noshufou.android.su") &&
+                RootUtils.enableApp("eu.chainfire.supersu");
+    }
+
     public static boolean installApk(String apkFilePath) {
         if (TextUtils.isEmpty(apkFilePath)) {
             Log.e(TAG, "APK_FILEPATH is null or empty");

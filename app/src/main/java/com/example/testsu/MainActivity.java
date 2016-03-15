@@ -29,20 +29,17 @@ public class MainActivity extends Activity {
 //        LogUtils.e("ceshibug");
 
 
-
     }
 
     public void click1(View view) {
-
         ToastUtils.shortShow(this, "禁用SuperSU");
-        RootUtils.disableApp("com.noshufou.android.su");
-        RootUtils.disableApp("eu.chainfire.supersu");
+        RootUtils.disableSu();
+
     }
 
     public void click2(View view) {
         ToastUtils.shortShow(this, "启用SuperSU");
-        RootUtils.enableApp("com.noshufou.android.su");
-        RootUtils.enableApp("eu.chainfire.supersu");
+        RootUtils.enableSu();
 
     }
 
