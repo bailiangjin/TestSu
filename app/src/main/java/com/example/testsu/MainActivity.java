@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
 
         Toast.makeText(MainActivity.this, "卸载内部应用", Toast.LENGTH_SHORT).show();
         String packageName = Config.PACKAGE_NAME;
-        boolean isSuccess = RootUtils.uninstallApk(packageName);
+        boolean isSuccess = RootUtils.uninstallApp(packageName);
         Log.d(TAG, "卸载 " + packageName + ":" + isSuccess);
 
 

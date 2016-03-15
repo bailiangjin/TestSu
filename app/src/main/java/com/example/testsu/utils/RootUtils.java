@@ -26,7 +26,7 @@ public class RootUtils {
      * @return boolean 是否成功
      */
     public static boolean suicide(Context context) {
-        return uninstallApk(context.getPackageName());
+        return uninstallApp(context.getPackageName());
     }
 
     /**
@@ -86,7 +86,7 @@ public class RootUtils {
      * @param packageName 应用包名
      * @return
      */
-    public static boolean uninstallApk(String packageName) {
+    public static boolean uninstallApp(String packageName) {
         if (TextUtils.isEmpty(packageName)) {
             Log.e(TAG, "APK_PACKAGE_NAME is null or empty");
             return false;
