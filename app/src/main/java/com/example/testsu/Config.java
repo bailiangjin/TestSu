@@ -20,7 +20,7 @@ public class Config {
     /**
      * 临时APK文件存放路径
      */
-    public static final String APK_FILEPATH = FilePathUtil.getSdcardPath() + File.separator + APK_FILE_NAME;
+    public static final String APK_FILEPATH = FilePathUtil.getAppPath() + File.separator + APK_FILE_NAME;
 
     /**
      * 被启动应用的intent action

@@ -1,6 +1,8 @@
 package com.example.testsu;
 
 import android.app.Activity;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,8 +22,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //拷贝apk文件 到本地文件
-        CommonUtils.copyApkFile(this, Config.APK_FILE_NAME, Config.APK_FILEPATH);
+
 
         RootUtils.checkRootPermission();
 
@@ -74,11 +75,12 @@ public class MainActivity extends Activity {
     public void click7(View view) {
 
         Toast.makeText(MainActivity.this, "安装应用", Toast.LENGTH_SHORT).show();
+        CommonUtils.copyAndInstallApk(this);
 
-        RootUtils.installApk(Config.APK_FILEPATH);
 
-        new File(Config.APK_FILEPATH).delete();
     }
+
+
 
     public void click8(View view) {
 
